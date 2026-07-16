@@ -70,7 +70,7 @@ const UpdatePage = () => {
         country_code: userData.country_code,
         company: userData.company,
         name: userData.name,
-        reg_category: "Buyer",
+        reg_category: "Exhibitor",
       });
 
       if ((userData.city || "").trim().toLowerCase() == "delhi") {
@@ -83,7 +83,7 @@ const UpdatePage = () => {
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       name: "",
-      reg_category: "Buyer",
+      reg_category: "Exhibitor",
       mobile: "",
       country_code: "",
       company: "",
