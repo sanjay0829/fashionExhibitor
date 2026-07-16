@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     if (userExists) {
       return Response.json(
         { success: false, message: "Mobile No. already registered" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     if (!reg_no || reg_no.length == 0) {
       return Response.json(
         { success: false, message: "Registration Number not generated" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     let photoUrl = "";
@@ -49,18 +49,18 @@ export async function POST(request: NextRequest) {
           const uploadStream = cloudinary.uploader.upload(
             regData.photoBase64,
             {
-              folder: "DelhiFashion",
+              folder: "dermacon",
               public_id: reg_no,
-              upload_preset: "delhiFashion",
+              upload_preset: "fordermacon",
               resource_type: "image",
               overwrite: true,
             },
             (error, result) => {
               if (error) reject(error);
               else resolve(result as CloudinaryUploadresult);
-            }
+            },
           );
-        }
+        },
       );
       console.log(result);
       photoUrl = result.secure_url;
@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
         success: true,
         message: "Registration done successfully",
       },
-      { status: 200 }
+      { status: 200 },
     );
     response.cookies.set("token", "", { httpOnly: true, expires: new Date(0) });
 
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
 
     return Response.json(
       { success: false, message: "Error in registering User" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -103,7 +103,7 @@ export async function PATCH(request: NextRequest) {
     if (!userId) {
       return NextResponse.json(
         { success: false, message: "Invalid / Expired User Login" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -112,7 +112,7 @@ export async function PATCH(request: NextRequest) {
     if (!userExists) {
       return NextResponse.json(
         { success: false, message: "User not found" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -134,9 +134,9 @@ export async function PATCH(request: NextRequest) {
             (error, result) => {
               if (error) reject(error);
               else resolve(result as CloudinaryUploadresult);
-            }
+            },
           );
-        }
+        },
       );
       console.log(result);
       photoUrl = result.secure_url;
@@ -149,7 +149,7 @@ export async function PATCH(request: NextRequest) {
         photo_url: photoUrl,
         reg_status: true,
       },
-      { new: true }
+      { new: true },
     );
 
     const result = await SendConfiramtionEmail(newUser!._id as string);
@@ -157,14 +157,14 @@ export async function PATCH(request: NextRequest) {
 
     return Response.json(
       { success: true, message: "Registration done successfully" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.log("Error in registering User", error);
 
     return Response.json(
       { success: false, message: "Error in registering User" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
