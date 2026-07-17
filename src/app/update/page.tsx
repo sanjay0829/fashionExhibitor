@@ -300,56 +300,6 @@ const UpdatePage = () => {
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="attend_date"
-                  render={() => {
-                    const selectedDates = form.watch("attend_date") || [];
-
-                    const handleCheckboxChange = (value: string) => {
-                      const current = form.getValues("attend_date") || [];
-                      if (current.includes(value)) {
-                        form.setValue(
-                          "attend_date",
-                          current.filter((item) => item !== value),
-                        );
-                      } else {
-                        form.setValue("attend_date", [...current, value]);
-                      }
-                    };
-
-                    const isChecked = (value: string) =>
-                      (form.watch("attend_date") || []).includes(value);
-
-                    return (
-                      <FormItem>
-                        <FormLabel className="text-lg font-medium">
-                          I will attend DFC’26 on*
-                        </FormLabel>
-                        <FormControl>
-                          <div className="flex flex-col gap-2">
-                            {regDates.map((date, idx) => (
-                              <label
-                                key={idx}
-                                className="flex items-center gap-2 w-fit cursor-pointer"
-                              >
-                                <input
-                                  type="checkbox"
-                                  checked={isChecked(date)}
-                                  onChange={() => handleCheckboxChange(date)}
-                                  className="w-5 h-5"
-                                />
-                                {date}
-                              </label>
-                            ))}
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    );
-                  }}
-                />
-
                 <div className="space-y-2">
                   <FormLabel className="text-lg font-medium">
                     Photo/Selfie*
