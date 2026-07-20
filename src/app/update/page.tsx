@@ -70,7 +70,7 @@ const UpdatePage = () => {
         country_code: userData.country_code,
         company: userData.company,
         name: userData.name,
-        reg_category: "Exhibitor",
+        reg_category: "Exhibitor Staff",
       });
 
       if ((userData.city || "").trim().toLowerCase() == "delhi") {
@@ -83,7 +83,7 @@ const UpdatePage = () => {
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       name: "",
-      reg_category: "Exhibitor",
+      reg_category: "Exhibitor Staff",
       mobile: "",
       country_code: "",
       company: "",
@@ -195,7 +195,7 @@ const UpdatePage = () => {
   return (
     <div className="w-full flex p-2 justify-center items-center min-h-screen bg-gradient-to-r from-slate-200 to-zinc-200">
       <div className="w-full max-w-3xl border border-zinc-600 rounded-2xl overflow-hidden p-1 bg-white shadow-2xl">
-        <Header LabelName="Exhibitor" />
+        <Header LabelName="Exhibitor Staff" />
         <div>
           <hr />
         </div>

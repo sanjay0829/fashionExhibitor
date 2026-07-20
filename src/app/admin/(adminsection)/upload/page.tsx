@@ -10,6 +10,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { exportToExcel } from "@/helpers/exportToexcel";
 import { PreData } from "@/models/predata";
 import { AddSchema } from "@/schemas/addSchema";
@@ -27,12 +34,15 @@ import { PiMicrosoftExcelLogoDuotone } from "react-icons/pi";
 import PhoneInput, { CountryData } from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { z } from "zod";
+import PreForm from "@/components/preForm";
 
 type FormData2 = z.infer<typeof AddSchema>;
 
 type FormData1 = z.infer<typeof UploadSchema>;
 
 const UploadPage = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [userId, setUserId] = useState("");
   const {
     register,
     handleSubmit,
@@ -416,6 +426,9 @@ const UploadPage = () => {
                       Company
                     </th>
                     <th className="text-left  font-bold border  px-2">City</th>
+                    <th className="text-left  font-bold border  px-2">
+                      Action
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -438,26 +451,16 @@ const UploadPage = () => {
                         {user.company}
                       </td>
                       <td className="border px-2 text-sm py-2">{user.city}</td>
-                      <td className="border px-2 text-sm py-2 hidden">
+                      <td className="border px-2 text-sm py-2 ">
                         <button
-                          onClick={async () => {
-                            setIsSaving(true);
-
-                            const result = await axios.post<ApiResponse>(
-                              "/api/user/sendmsg",
-                              { id: user._id },
-                            );
-                            if (result.data.success) {
-                              toast.success(
-                                `Confirmation  sent on ${user.mobile}`,
-                              );
-                              setIsSaving(false);
-                            }
+                          onClick={() => {
+                            setIsOpen(true);
+                            setUserId(user._id as string);
                           }}
                           className="bg-sky-700 flex gap-2 items-center hover:bg-zinc-900 text-white px-4 py-2 rounded-md"
                         >
                           <MdOutlineAttachEmail />
-                          Send
+                          Edit
                         </button>
                       </td>
                     </tr>
@@ -553,6 +556,26 @@ const UploadPage = () => {
           </button>
         </div>
       )}
+
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent
+          onInteractOutside={(e) => e.preventDefault()}
+          className="max-w-2xl w-full flex"
+        >
+          <DialogHeader className="hidden">
+            <DialogTitle>Add new category</DialogTitle>
+          </DialogHeader>
+          <PreForm
+            userId={userId}
+            closeModal={() => {
+              setIsOpen(false);
+            }}
+            updateUsers={() => {
+              handleSubmit2();
+            }}
+          />
+        </DialogContent>
+      </Dialog>
 
       {isSubmitting && <ProcessingOverlay />}
       {isSaving && <ProcessingOverlay />}

@@ -1,4 +1,5 @@
 import { Adminuser } from "@/models/admin";
+import { PreData } from "@/models/predata";
 import { User } from "@/models/user";
 
 export interface ApiResponse {
@@ -8,4 +9,6 @@ export interface ApiResponse {
   userList?: User[];
   admin?: Adminuser;
   adminusers?: Adminuser[];
+  predata?: PreData;
+  predataList?: PreData[];
 }
