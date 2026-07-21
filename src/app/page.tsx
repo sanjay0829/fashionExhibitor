@@ -149,10 +149,10 @@ export default function Home() {
         </div>
         <div className="w-full p-2 bg-black text-white text-center ">
           <h2 className="font-bold md:text-5xl text-3xl">
-            Online Registrations
+            Online Registrations Closed
           </h2>
         </div>
-        <div className="md:p-4 p-2 ">
+        <div className="md:p-4 p-2 hidden ">
           <div
             className={`w-full ${
               otp.length > 0 ? "hidden" : "flex"
